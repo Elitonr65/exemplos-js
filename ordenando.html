@@ -1,29 +1,35 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ordenado com JS</title>
+    <link rel="stylesheet" href="./src/css/style.css">
 </head>
+
 <body>
-    <h1>Algoritimo de Ordenação</h1>
-    
-    <label for="valor">Valor:</label>
-    <input type="number" id="valor" placeholder="Digite um número">
+    <div class="container">
+        <h1>Algoritimo de Ordenação</h1>
 
-    <button onclick="add()">Adicionar</button>
+        <label for="valor">Valor:</label>
+        <input type="number" id="valor" placeholder="Digite um número">
 
-    <label for="metodo">Método de Ordenação:</label>
-    <select  id="metodo">
-        <option value="bubble">Bubble Sort</option>
-        <option value="selection">Selection Sort</option>
-        <option value="quick">Quick Sort</option>
-    </select>
+        <button onclick="add()">Adicionar</button>
 
-    <button onclick="ordenar()">Ordenar</button>
-    <button onclick="misturar()">Misturar</button>
+        <label for="metodo">Método de Ordenação:</label>
+        <select id="metodo">
+            <option value="bubble">Bubble Sort</option>
+            <option value="selection">Selection Sort</option>
+            <option value="quick">Quick Sort</option>
+        </select>
 
-    <ul id="valores"></ul>
+        <button onclick="ordenar()">Ordenar</button>
+        <button onclick="misturar()">Misturar</button>
+
+        <ul id="valores"></ul>
+
+    </div>
 
     <script>
         var numeros = [];
@@ -39,8 +45,8 @@
                 node.appendChild(texto);
                 lista.appendChild(node);
                 numeros.push(valor);
-                input.value = ''; 
-            }else {
+                input.value = '';
+            } else {
                 alert('Por favor, digite um número válido.');
             }
         }
@@ -49,8 +55,8 @@
             var lista = document.getElementById('valores');
             var metodo = document.getElementById('metodo');
             var itens = Array.from(lista.children);
-            
-            var vetor = itens.map(function(item){
+
+            var vetor = itens.map(function (item) {
                 return eval(item.innerHTML);
             });
 
@@ -66,13 +72,13 @@
                     break;
                 default:
                     alert('Método de ordenação invalida.');
-                    return;    
+                    return;
             }
             lista.innerHTML = vetor
-                .map(function(num) {
+                .map(function (num) {
                     return `<li>${num}</li>`;
                 })
-                .reduce(function(acumulado, item) {
+                .reduce(function (acumulado, item) {
                     return acumulado + item;
                 }, '');
         }
@@ -80,28 +86,28 @@
         function misturar() {
             var lista = document.getElementById('valores');
             var itens = Array.from(lista.children);
-            var vetor = itens.map(function(item) {
+            var vetor = itens.map(function (item) {
                 return eval(item.innerHTML);
             });
 
             shuffle(vetor, Math.floor(vetor.length * 2)); // Utiliza duas vezes o comprimento do vetor como quantidade de trocas
 
             lista.innerHTML = vetor
-                .map(function(num) {
+                .map(function (num) {
                     return `<li>${num}</li>`;
                 })
-                .reduce(function(acumulado, item) {
-                     return acumulado + item;
-                 }, '');
+                .reduce(function (acumulado, item) {
+                    return acumulado + item;
+                }, '');
 
         }
-           
-        
+
+
 
         function atualizarLista() {
             var lista = document.getElementById('valores');
             lista.innerHTML = '';
-            numeros.forEach(function(num){
+            numeros.forEach(function (num) {
                 var item = document.createElement('li');
                 item.textContent = num;
                 lista.appendChild(item);
@@ -111,4 +117,5 @@
 
     <script src="ordenando.js"></script>
 </body>
+
 </html>
