@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordenado com JS</title>
+</head>
+<body>
+    <h1>Algoritimo de Ordenação</h1>
+    
+    <label for="valor">Valor:</label>
+    <input type="number" id="valor" placeholder="Digite um número">
+
+    <button onclick="add()">Adicionar</button>
+
+    <label for="metodo">Método de Ordenação:</label>
+    <select  id="metodo">
+        <option value="bubble">Bubble Sort</option>
+        <option value="selection">Selection Sort</option>
+        <option value="quick">Quick Sort</option>
+    </select>
+
+    <button onclick="ordenar()">Ordenar</button>
+    <button onclick="misturar()">Misturar</button>
+
+    <ul id="valores"></ul>
+
+    <script>
+        var numeros = [];
+
+        function add() {
+            var input = document.getElementById('valor');
+            var valor = parseInt(input.value);
+            var lista = document.getElementById('valores');
+
+            if (!isNaN(valor)) {
+                var node = document.createElement('li');
+                var texto = document.createTextNode(valor);
+                node.appendChild(texto);
+                lista.appendChild(node);
+                numeros.push(valor);
+                input.value = ''; 
+            }else {
+                alert('Por favor, digite um número válido.');
+            }
+        }
+
+        function ordenar() {
+            var lista = document.getElementById('valores');
+            var metodo = document.getElementById('metodo');
+            var itens = Array.from(lista.children);
+            
+            var vetor = itens.map(function(item){
+                return eval(item.innerHTML);
+            });
+
+            switch (metodo.selectedIndex) {
+                case 0:
+                    bubble_sort(vetor);
+                    break;
+                case 1:
+                    selection_sort(vetor);
+                    break;
+                case 2:
+                    quick_sort(vetor);
+                    break;
+                default:
+                    alert('Método de ordenação invalida.');
+                    return;    
+            }
+            lista.innerHTML = vetor
+                .map(function(num) {
+                    return `<li>${num}</li>`;
+                })
+                .reduce(function(acumulado, item) {
+                    return acumulado + item;
+                }, '');
+        }
+
+        function misturar() {
+            var lista = document.getElementById('valores');
+            var itens = Array.from(lista.children);
+            var vetor = itens.map(function(item) {
+                return eval(item.innerHTML);
+            });
+
+            shuffle(vetor, Math.floor(vetor.length * 2)); // Utiliza duas vezes o comprimento do vetor como quantidade de trocas
+
+            lista.innerHTML = vetor
+                .map(function(num) {
+                    return `<li>${num}</li>`;
+                })
+                .reduce(function(acumulado, item) {
+                     return acumulado + item;
+                 }, '');
+
+        }
+           
+        
+
+        function atualizarLista() {
+            var lista = document.getElementById('valores');
+            lista.innerHTML = '';
+            numeros.forEach(function(num){
+                var item = document.createElement('li');
+                item.textContent = num;
+                lista.appendChild(item);
+            });
+        }
+    </script>
+
+    <script src="ordenando.js"></script>
+</body>
+</html>
