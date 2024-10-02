@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuário de Teste via Rest</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
+   
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@3.2.37/dist/vue.global.min.js"></script>
 
 </head>
+
 <body class="container bg-warning">
     <h1 class="text-center my-4">Usuário de Teste via Rest</h1>
-    <p>Dados fornecidos pelo <a href="https://reqres.in" target="_blank">ReqRes.in</a>, uma API REST gratuita para testes.</a></p>
+    <p>Dados fornecidos pelo <a href="https://reqres.in" target="_blank">ReqRes.in</a>, uma API REST gratuita para
+        testes.</a></p>
 
-    <div id="app" class="container-fluid">
+    <div id="usuarios" class="container-fluid">
         <div class="row">
             <div class="col-md-3 p2 m-3" v-for="(user, index) in users" :key="index">
                 <div class="card">
@@ -44,24 +47,31 @@
                 };
             },
             mounted() {
-                fetch('https://reqres.in/api/users?per_page=10')
-                    .then(response => response.json())
-                    .then(data => {
-                        this.users = data.data;
-                        this.loading =false;
-                    })
-                    .catch(error => {
-                        console.error("Erro ao carregar os dados:", error);
-                        this.error = true;
-                        this.loading = false;
-                    });
+                this.loadUsers();
+            },
+            methods: {
+                loadUsers() {
+
+                    fetch('https://reqres.in/api/users?per_page=10')
+                        .then(response => response.json())
+                        .then(data => {
+                            this.users = data.data;
+                            this.loading = false;
+                        })
+                        .catch(error => {
+                            console.error("Erro ao carregar os dados:", error);
+                            this.error = true;
+                            this.loading = false;
+                        });
+                }
             }
         });
 
-        app.mount('#app');
+        app.mount('#usuarios');
     </script>
-
+x
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>
